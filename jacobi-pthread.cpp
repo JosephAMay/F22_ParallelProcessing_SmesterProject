@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
-    t2 = time2();
+    t2 = time1();
     printf("\n\nTOTAL TIME %f\n", t2-t1);   
     
     // Check for wrong solution
