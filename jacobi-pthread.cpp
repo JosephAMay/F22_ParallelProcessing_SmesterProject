@@ -24,14 +24,22 @@ double time2();
 
 int main(int argc, char *argv[]) {
     
+    string filename;
     double t1, t2;
     int i, j;     
     
+    if (argc != 3) {
+        printf("useage: jacobi-pthread filename num_threads\n");
+        return 0;
+    } else {
+        filename = argv[1];
+        num_threads = atoi(argv[2]);
+    }
+        
     ifstream file;
-    file.open( "1000Matrix20.txt");
+    file.open(filename);
     file >> M;
     file >> N;
-    num_threads = 1;
     
     // Dynamic array allocation for 2D array
     matrix = (float **)malloc(M * sizeof(float *));
@@ -82,7 +90,7 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
-    t2 = time1();
+    t2 = time2();
     printf("\n\nTOTAL TIME %f\n", t2-t1);   
     
     // Check for wrong solution
