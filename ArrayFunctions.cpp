@@ -111,7 +111,7 @@ void createRandArray(int numRow, int numCol, int arr[NUMROW][NUMCOL], int* sumAr
 			arr[x][y]=1;	
 	    	} */
 
-                arr[x][y] += 2;
+                arr[x][y] += 1;
             }
         }
     }
