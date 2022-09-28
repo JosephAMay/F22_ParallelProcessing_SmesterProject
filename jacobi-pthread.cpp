@@ -8,14 +8,14 @@
 
 using namespace std;
 
-int N, M, num_threads;
-float **matrix;
-float *b;
-float *xOld;
-float *x;
-float epsilon, max_error;
-pthread_mutex_t lock_m;
-float max_eps[MAXTHREADS];
+int N, M, num_threads;       // matrix dimensions NxM, number of iterations
+float **matrix;              // matrix
+float *b;                    // b
+float *xOld;                 // old solution
+float *x;                    // new solution
+float epsilon, max_error;    // acceptable error, maximum error
+pthread_mutex_t lock_m;      // mutex
+float max_eps[MAXTHREADS];   // stores max errors
 
 bool checkSolution();
 void * updateSolution(void * argu);
@@ -24,10 +24,11 @@ double time2();
 
 int main(int argc, char *argv[]) {
     
-    string filename;
-    double t1, t2;
-    int i, j;     
+    string filename;     // file name
+    double t1, t2;       // time variables
+    int i, j;            // loop variables
     
+    // Get filename and number of threads from user
     if (argc != 3) {
         printf("useage: jacobi-pthread filename num_threads\n");
         return 0;
@@ -36,12 +37,13 @@ int main(int argc, char *argv[]) {
         num_threads = atoi(argv[2]);
     }
         
+    // Open the file and read in the matrix dimensions
     ifstream file;
     file.open(filename);
     file >> M;
     file >> N;
     
-    // Dynamic array allocation for 2D array
+    // Dynamic array allocation for arrays
     matrix = (float **)malloc(M * sizeof(float *));
     b = (float *)malloc(N * sizeof(float));
     x = (float *)malloc(N * sizeof(float));
@@ -69,13 +71,14 @@ int main(int argc, char *argv[]) {
         }
     }
  
-    epsilon = 0.1;    // acceptable error    
+    epsilon = 0.01;      // acceptable error 
+    int iterations = 0;  // iteration number
     
     // loop until acceptable error is reached
-    //while (abs(max_error) > epsilon) {
     pthread_t pids[num_threads-1];
     t1 = time1();
     while (1) {
+        iterations++;
         max_error = 0;
         
         for (i=0; i < num_threads; i++) {
@@ -90,8 +93,15 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
-    t2 = time2();
-    printf("\n\nTOTAL TIME %f\n", t2-t1);   
+    t2 = time1();
+    printf("\n\nTOTAL TIME %f\n", t2-t1);  
+    cout << "# Iterations: " << iterations << "\n";
+    
+    cout << "\nx:\n";
+    for (i=0; i < N; i++) {
+        cout << x[i] << " ";
+    }
+    cout << "\n\n";
     
     // Check for wrong solution
     if (checkSolution()) {
@@ -99,11 +109,6 @@ int main(int argc, char *argv[]) {
     } else {
         cout << "bad solution\n";
     }
-    
-    for (i=0; i < M; i++) {
-        std::cout << x[i] << " ";
-    }
-    std::cout << "\n";
 
     // Free allocated memory
     for (i=0; i < M; i++) {
@@ -123,6 +128,7 @@ void * updateSolution(void * argu) {
     float lmax = 0, error, sum;
     int thread_num1, i, j, rowStep, begin, end;
     
+    // decide which rows will be handled
     thread_num1 = num_threads;
     rowStep = (int) (M/thread_num1);
     begin = (lcount * rowStep);
