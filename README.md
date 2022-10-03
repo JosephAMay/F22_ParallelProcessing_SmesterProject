@@ -111,3 +111,17 @@ Both arrays and loops are exceellent targets for parallel operations.
 
 Each row of the linear system can be operated on independently from other rows. There is little communication overhead. Each thread just needs to enter in its new assumed variable value at the end of each opearation and continue iterating until the error is below the .1 threshold. 
 
+# Steps
+First we used the array functions.cpp file to generate arrays of variable sizes. The minimum was 500x500, the maximum was 1000x1000.
+Currently, the arrays are guarenteed to be diagonally dominant, and can positive or negative values in the range [-7,7], except for the diagonal values
+which must be larger than the magnitude of their rows to maintain diagonal dominance.
+
+
+Some sample matrices are contained in the arrayData.zip file. The file names follow this pattern: size of the matrix is the first section, followed by the word Matrix followed by some random number, so an example filename of a 550x550 Matrix would be "550x550Matrix32"
+
+
+From there we made the acobi general.cpp program to solve these random matrices sequentially.
+
+After that we made the jacobi pthread.cpp which is a parallel version of the original sequential jacobi program.
+
+From here, we want to generate different types of matrices (sparse, upper triangular, non diagonally dominant) and test to see how the program performs, implement jacobi with different parallel methods like open mp and compare results amongst parallel implementations, as well as try to find a specific problem application of the jacobi algorithm that we can use
