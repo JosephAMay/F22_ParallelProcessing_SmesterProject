@@ -1,0 +1,17 @@
+CC=mpicc
+CFLAGS=-c -g -O0 -std=c++11 -Wall
+LDFLAGS= -lstdc++
+SOURCES=jacobi-mpi.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=jacobi-mpi
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -f core $(EXECUTABLE) $(OBJECTS)
