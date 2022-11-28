@@ -153,5 +153,5 @@ These complete files were exported into microsoft excel where I graphed the aver
 implementation which we will discuss below. 
 
 
-#Future Work 
+# Future Work 
 From here, we want to generate different types of matrices (sparse, upper triangular, non diagonally dominant) and test to see how the program performs, implement jacobi with different parallel methods like open mp and compare results amongst parallel implementations, as well as try to find a specific problem application of the jacobi algorithm that we can use
