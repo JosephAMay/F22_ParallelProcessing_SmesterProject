@@ -1,0 +1,5 @@
+openMPJacobi:	openMPImplementation.cpp
+		g++ -fopenmp openMPImplementation.cpp -o OMPJacobi
+
+clean:		openMPJacobi
+		rm -f OMPJacobi
