@@ -124,4 +124,34 @@ From there we made the acobi general.cpp program to solve these random matrices 
 
 After that we made the jacobi pthread.cpp which is a parallel version of the original sequential jacobi program.
 
+Aditionally we also implemented the jacobi alrogithm using openMP and MPI
+
+#Testing 
+To evaluate our programs, we recorded and charted the run times of each implementation.
+Run time started after each program read in the matrix file and initialized the arrays,
+and stopped once the epsilon point was reached. The run time of each program is printed to standard output. 
+
+In order to maintain standards, all parallel implementations were tested using the matrix 1000Matrix20.txt. 
+This is a non-sparse array of size 1000x1000.
+
+Each implementation was tested with 4 thread values: 1,2,4,8. 
+
+Each implementation was run 100 times for each possible thread number.
+For example, the pthread implementation ran 100 times with 1 thread, 100 times with 2 threads, 
+100 times with 3 threads, 100 times with 4 threads. The results of each test were sent into a file.
+This process was repeated for both openMP and MPI implementations.
+
+On screen I have an example shell command to do a test like this colored in black. 
+there is an outer loop which represents the possible thread numbers 1 2 4 and 8. Then an inner loop
+which loops 100 times. Each thread number goes 100 times and the output of that thread number is appended to a file
+
+Once all the individual files are made, they are combined into a complete file with all thread data 
+using the the command of the bottom bullet point. Listing the files with the -v flag so they appear in numerical order
+then the files are pasted together seperated by a tab.
+
+These complete files were exported into microsoft excel where I graphed the average, minimum, and maximum times of each
+implementation which we will discuss below. 
+
+
+#Future Work 
 From here, we want to generate different types of matrices (sparse, upper triangular, non diagonally dominant) and test to see how the program performs, implement jacobi with different parallel methods like open mp and compare results amongst parallel implementations, as well as try to find a specific problem application of the jacobi algorithm that we can use
