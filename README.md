@@ -126,7 +126,7 @@ After that we made the jacobi pthread.cpp which is a parallel version of the ori
 
 Aditionally we also implemented the jacobi alrogithm using openMP and MPI
 
-#Testing 
+# Testing 
 To evaluate our programs, we recorded and charted the run times of each implementation.
 Run time started after each program read in the matrix file and initialized the arrays,
 and stopped once the epsilon point was reached. The run time of each program is printed to standard output. 
